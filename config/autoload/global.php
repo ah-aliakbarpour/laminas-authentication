@@ -13,5 +13,19 @@
  */
 
 return [
-    // ...
+    'db' => [
+        'driver' => 'Pdo',
+        'dsn' => 'mysql:host=localhost;port=3306;dbname=auth',
+        'user' => 'root',
+        'password' => '1245',
+    ],
+
+    'db_doctrine' => [
+        'driver' => 'pdo_mysql',
+        'dbname' => 'auth',
+        'host' => 'localhost',
+        'port' => '3306',
+        'user' => 'root',
+        'password' => '1245',
+    ]
 ];

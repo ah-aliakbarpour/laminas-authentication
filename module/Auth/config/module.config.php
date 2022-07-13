@@ -3,10 +3,26 @@
 namespace Auth;
 
 use Auth\Controller\AuthController;
+use Auth\Factory\AuthControllerFactory;
+use Auth\Factory\UserFactory;
+use Auth\Factory\UserRepositoryFactory;
+use Auth\Model\User;
+use Auth\Repository\UserRepository;
 use Laminas\Router\Http\Literal;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
 return [
+    'service_manager' => [
+        'factories' => [
+            User::class => UserFactory::class,
+            UserRepository::class => UserRepositoryFactory::class,
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            AuthController::class => AuthControllerFactory::class,
+        ],
+    ],
     'router' => [
         'routes' => [
 
@@ -51,11 +67,6 @@ return [
                 ],
             ],
 
-        ],
-    ],
-    'controllers' => [
-        'factories' => [
-            AuthController::class => InvokableFactory::class,
         ],
     ],
     'view_manager' => [

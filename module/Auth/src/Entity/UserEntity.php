@@ -36,5 +36,4 @@ class UserEntity
      * @Column(type="datetime")
      */
     public $updated_at;
-
 }
