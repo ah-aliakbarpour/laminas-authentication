@@ -32,7 +32,7 @@ class AuthController extends AbstractActionController
         if($request->isPost()) {
             $formData = $request->getPost()->toArray();
             $form->setData($formData);
-            $form->setInputFilter($this->user->loginRegisterFormInputFilters());
+            $form->setInputFilter($this->user->registerFormInputFilters());
 
             if($form->isValid()) {
                 try {
@@ -55,7 +55,30 @@ class AuthController extends AbstractActionController
 
     public function loginAction()
     {
+        $auth = new AuthenticationService();
+
+        if($auth->hasIdentity())
+            return $this->redirect()->toRoute('home');
+
+        $request = $this->getRequest();
         $form = new LoginRegisterForm();
+
+        if($request->isPost()) {
+            $formData = $request->getPost()->toArray();
+            $form->setData($formData);
+            $form->setInputFilter($this->user->loginFormInputFilters());
+
+            if($form->isValid()) {
+                if ($this->user->login($form, $auth)) {
+                    $this->flashMessenger()->addSuccessMessage('Login was successful!');
+                    return $this->redirect()->toRoute('profile');
+                }
+                else {
+                    $this->flashMessenger()->addErrorMessage('Email or Password is incorrect!');
+                    return $this->redirect()->refresh();
+                }
+            }
+        }
 
         return new ViewModel([
             'form' => $form,
@@ -64,7 +87,12 @@ class AuthController extends AbstractActionController
 
     public function logoutAction()
     {
-        echo 'logout';
+        $auth = new AuthenticationService();
+        if($auth->hasIdentity()) {
+            $auth->clearIdentity();
+        }
+
+        return $this->redirect()->toRoute('login');
     }
 
     public function profileAction()

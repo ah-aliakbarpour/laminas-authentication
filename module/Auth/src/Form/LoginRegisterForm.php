@@ -84,6 +84,26 @@ class LoginRegisterForm extends Form
             ]
         ]);
 
+        // Remember Me
+        $this->add([
+            'type' => 'checkbox',
+            'name' => 'remember_me',
+            'options' => [
+                'label' => 'Remember Me?',
+                'label_attributes' => [
+                    'class' => 'custom-control-label'
+                ],
+                'use_hidden_element' => true,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+            ],
+            'attributes' => [
+                'value' => 0,
+                'id' => 'remember_me',
+                'class' => 'custom-control-input'
+            ]
+        ]);
+
         // Submit Button
         $this->add([
             'type' => Element\Submit::class,

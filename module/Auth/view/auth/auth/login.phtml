@@ -47,14 +47,24 @@ $form->prepare();
                 </div>
             </div>
 
-            <span class="mt-2 float-left">
-				Don't have an account yet? <a href="<?= $this->url('register') ?>">Register here</a>
-			</span>
+            <!-- check box -->
+            <div class="mb-3">
+                <div class="custom-control custom-checkbox">
+                    <?= $this->formCheckbox($form->get('remember_me')); ?>
+                    <?= $this->formLabel($form->get('remember_me')); ?>
+                </div>
+            </div>
 
             <!-- submit -->
             <div class="mb-3 float-right">
                 <?= $this->formSubmit($form->get('submit')->setAttribute('value', 'Login')); ?>
             </div>
+
+
+
+            <span class="mt-2 float-left">
+				Don't have an account yet? <a href="<?= $this->url('register') ?>">Register here</a>
+			</span>
 
             <!-- close the form -->
             <?= $this->form()->closeTag(); ?>

@@ -8,6 +8,8 @@ use Laminas\Crypt\Password\Bcrypt;
 class UserRepository
 {
     public const TABLE_NAME = 'user';
+    public const IDENTITY_COLUMN = 'email';
+    public const CREDENTIAL_COLUMN = 'password';
     protected $query;
 
     public function __construct($config)
@@ -39,9 +41,13 @@ class UserRepository
         //
     }
 
-    public function getUserByIdentity(string $identity, array $columns)
+    public function getUserByIdentity(string $identityValue, array $columns = [self::CREDENTIAL_COLUMN])
     {
-        //
+        return $this->query->select($columns)
+            ->from(self::TABLE_NAME)
+            ->where(self::IDENTITY_COLUMN . '= :' . self::IDENTITY_COLUMN)
+            ->setParameter(self::IDENTITY_COLUMN, $identityValue)
+            ->fetchAssociative();
     }
 
     public function getCredential(string $identity)
