@@ -97,6 +97,11 @@ class AuthController extends AbstractActionController
 
     public function profileAction()
     {
+        $auth = new AuthenticationService();
+
+        if(!$auth->hasIdentity())
+            return $this->redirect()->toRoute('login');
+
         return new ViewModel();
     }
 }
