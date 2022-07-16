@@ -14,6 +14,7 @@ use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Session\SessionManager;
+use Laminas\Validator\Db\NoRecordExists;
 use Laminas\Validator\EmailAddress;
 use Laminas\Validator\Identical;
 use Laminas\Validator\NotEmpty;
@@ -122,14 +123,14 @@ class User
                             ],
                         ],
                     ],
-//                    [
-//                        'name' => NoRecordExists::class,
-//                        'options' => [
-//                            'table' => $this->table,
-//                            'field' => 'email',
-//                            'adapter' => $this->adapter,
-//                        ],
-//                    ],
+                    [
+                        'name' => NoRecordExists::class,
+                        'options' => [
+                            'table' => UserRepository::TABLE_NAME,
+                            'field' => 'email',
+                            'adapter' => $this->dbAdapter,
+                        ],
+                    ],
                 ],
             ]
         );
@@ -215,14 +216,6 @@ class User
                             ],
                         ],
                     ],
-//                    [
-//                        'name' => NoRecordExists::class,
-//                        'options' => [
-//                            'table' => $this->table,
-//                            'field' => 'email',
-//                            'adapter' => $this->adapter,
-//                        ],
-//                    ],
                 ],
             ]
         );
